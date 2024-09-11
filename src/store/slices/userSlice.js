@@ -130,10 +130,12 @@ export const getUser = () => async (dispatch) => {
     const { data } = await axios.get("https://student-portfolio-backend.onrender.com/api/v1/user/me", {
       withCredentials: true,
     });
+    console.log(data);
     dispatch(userSlice.actions.loadUserSuccess(data.user));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(userSlice.actions.loadUserFailed(error.response.data.message));
+    const errorMessage = error.response?.data?.message || "An error occurred";
+    dispatch(userSlice.actions.loadUserFailed(errorMessage));
   }
 };
 

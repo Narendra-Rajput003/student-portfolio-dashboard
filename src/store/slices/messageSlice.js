@@ -60,13 +60,15 @@ export const getAllMessages = () => async (dispatch) => {
       "https://student-portfolio-backend.onrender.com/api/v1/message/getall",
       { withCredentials: true }
     );
+    console.log("get all messages", response);
     dispatch(
       messageSlice.actions.getAllMessagesSuccess(response.data.messages)
     );
     dispatch(messageSlice.actions.clearAllErrors());
   } catch (error) {
+    const errorMessage = error.response?.data?.message || "An error occurred";
     dispatch(
-      messageSlice.actions.getAllMessagesFailed(error.response.data.message)
+      messageSlice.actions.getAllMessagesFailed(errorMessage)
     );
   }
 };
